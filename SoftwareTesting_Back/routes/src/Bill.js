@@ -48,6 +48,7 @@ Bill.getBill = function(data){
 	var item = new bill();
 	Bill.on('value', function(snapshot){
 		snapshot.forEach(function(snap){
+			console.log(snap.val());
 			if(snap.key() == data.phoneNum){
 				item.phone = snap.key();
 				item.mins = snap.child("minutes").val();

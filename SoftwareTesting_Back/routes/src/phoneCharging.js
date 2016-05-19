@@ -10,21 +10,21 @@ exports.charging = function(req, res, next){
 	var totalNum = 0;
 	if(data.mins && data.times && data.remains){
 		if(data.mins > 0 && data.mins <= 60 && data.times <= 1){
-			totalNum = 25 + data.mins * 0.15 * 0.01;
+			totalNum = 25 + data.mins * 0.15 * (1-0.01);
 
 		}else if(data.mins > 60 && data.mins <=120 && data.times <= 2){
-			totalNum = 25 + data.mins * 0.15 * 0.015;
+			totalNum = 25 + data.mins * 0.15 * (1-0.015);
 
 		}else if(data.mins > 120 && data.mins <=180 && data.times <= 3){
-			totalNum = 25 + data.mins * 0.15 * 0.02;
+			totalNum = 25 + data.mins * 0.15 * (1-0.02);
 			
 		}else if(data.mins > 180 && data.mins <=300 && data.times <= 3){
-			totalNum = 25 + data.mins * 0.15 * 0.025;
+			totalNum = 25 + data.mins * 0.15 * (1-0.025);
 			
 		}else if(data.mins > 300 && data.mins <=43200 && data.times <= 6){
-			totalNum = 25 + data.mins * 0.15 * 0.03;
+			totalNum = 25 + data.mins * 0.15 * (1-0.03);
 			
-		}else if(data.mins > 43200){
+		}else if(data.mins > 43200 || data.mins < 0){
 			res.json({
 				error: "mins参数错误！"
 			})
