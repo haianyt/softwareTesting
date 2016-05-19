@@ -16,13 +16,18 @@ async def testApi(sheet1,sheet2,url,i):
 	row['times'] = sheet1.cell(i,1).value
 	row['remains'] = sheet1.cell(i,2).value
 	result = await getDataFromApi(url,row)
-	result = json.loads(result)['totalNum']
+	result = json.loads(result)
 	for j in range(0,5):
 		sheet2.write(i,j,sheet1.cell(i,j).value)
-	if float(result) == float(sheet1.cell(i,4).value):
-		sheet2.write(i,5,result)
+
+
+	if 'error' in result:
+		sheet2.write(i,5,result['error'])
+		return
+	if float(result['totalNum']) == float(sheet1.cell(i,4).value):
+		sheet2.write(i,5,result['totalNum'])
 	else:
-		sheet2.write(i,5,result,style)
+		sheet2.write(i,5,result['totalNum'],style)
 
 
 
@@ -52,6 +57,6 @@ tasks = [testApi(sheet1,sheet2,url,i) for i in range(1,nrows-1)]
 loop = asyncio.get_event_loop()
 loop.run_until_complete(asyncio.wait(tasks))
 
-f.save('话费用例测试3.xls')
+f.save('话费用例测试4.xls')
 
 
